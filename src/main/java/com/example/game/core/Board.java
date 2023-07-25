@@ -1,5 +1,7 @@
 package com.example.game.core;
 
+import com.example.game.actionresults.MakeMoveResult;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
@@ -33,7 +35,7 @@ public class Board {
         return new ArrayList<>(characters);
     }
 
-    public boolean makeMove(int deltaX, int deltaY) {
+    public MakeMoveResult makeMove(int deltaX, int deltaY) {
         Charact currentPlayer = currentCharacter();
 
         int newX = currentPlayer.getXPosition() + deltaX;
@@ -44,13 +46,20 @@ public class Board {
         boolean isOverY = newY > maxYLength;
         boolean isYBelowOne = newY < 1;
 
+        MakeMoveResult result = new MakeMoveResult();
+
         if (isOverX || isOverY || isXBelowOne || isYBelowOne) {
-            return false;
+            result.setMadeMove(false);
+        } else {
+            currentPlayer.setNewPosition(newX, newY);
+            result.setX(currentPlayer.getXPosition());
+            result.setY(currentPlayer.getYPosition());
+            result.setMadeMove(true);
         }
 
-        currentPlayer.setNewPosition(newX, newY);
+
 
         nextCharacter();
-        return true;
+        return result;
     }
 }

@@ -1,5 +1,7 @@
 package com.example.game.core;
 
+import com.example.game.actionresults.MakeMoveResult;
+
 import java.util.List;
 
 public class Game {
@@ -19,5 +21,9 @@ public class Game {
 
     public List<Charact> getCharacters(){
         return board.charactersOrder();
+    }
+
+    public MakeMoveResult makeMove(int deltaX, int deltaY) {
+        return board.makeMove(deltaX, deltaY);
     }
 }
